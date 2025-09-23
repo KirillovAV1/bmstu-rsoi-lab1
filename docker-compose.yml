@@ -1,9 +1,10 @@
-version: "3"
+version: "3.9"
+
 services:
   postgres:
-    image: library/postgres:13
+    image: postgres:13
     container_name: postgres
-    restart: on-failure
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
@@ -13,6 +14,19 @@ services:
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: flask_app
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - postgres
 
 volumes:
   db-data:
