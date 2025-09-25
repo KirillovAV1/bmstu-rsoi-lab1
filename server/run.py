@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from model import db
 from controller import bp as persons_bp
+from service import bp as service_bp
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +14,7 @@ def create_app():
 
     db.init_app(app)
     app.register_blueprint(persons_bp)
+    app.register_blueprint(service_bp)
 
     with app.app_context():
         db.create_all()

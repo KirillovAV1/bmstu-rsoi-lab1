@@ -9,4 +9,4 @@ COPY . .
 
 ENV FLASK_APP=run.py
 
-CMD ["sh", "-c", "gunicorn -b 0.0.0.0:$PORT run:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "run:app"]
