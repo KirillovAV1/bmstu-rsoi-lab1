@@ -48,15 +48,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set image tags (lowercase)
+        run: |
+          REPO_LC=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE_LATEST=ghcr.io/${REPO_LC}:latest" >> $GITHUB_ENV
+          echo "IMAGE_SHA=ghcr.io/${REPO_LC}:sha-${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "Using tags:"
+          echo "  $IMAGE_LATEST"
+          echo "  $IMAGE_SHA"
+
       - name: Build & Push
         uses: docker/build-push-action@v6
         with:
           context: server
           file: server/Dockerfile
           push: true
-          tags: |
-            ${{ toLower(format('ghcr.io/{0}:latest', github.repository)) }}
-            ${{ toLower(format('ghcr.io/{0}:sha-{1}', github.repository, github.sha)) }}
+          tags: ${{ env.IMAGE_LATEST }},${{ env.IMAGE_SHA }}
+
 
   deploy:
     name: Deploy to Render
