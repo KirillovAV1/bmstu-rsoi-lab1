@@ -65,7 +65,6 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_LATEST }},${{ env.IMAGE_SHA }}
 
-
   deploy:
     name: Deploy to Render
     needs: build
