@@ -15,6 +15,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Show repo tree
+        run: |
+          echo "== repo root =="
+          ls -la
+          echo "== server =="
+          ls -la server || true
+          echo "== server/tests =="
+          ls -la server/tests || true
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -22,11 +31,15 @@ jobs:
 
       - name: Install deps
         working-directory: server
-        run:
+        run: |
+          python -V
           pip install -r requirements.txt
 
       - name: Run pytest
-        run: pytest -q server/tests
+        working-directory: server
+        run: |
+          pytest -q tests
+
 
   build:
     name: Build & Push Docker (GHCR)
