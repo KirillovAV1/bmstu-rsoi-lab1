@@ -1,8 +1,8 @@
 import os
 import pytest
 from sqlalchemy import text
-from server.run import create_app
-from server.model import db
+from run import create_app
+from model import db
 
 
 @pytest.fixture(scope="session")
