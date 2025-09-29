@@ -1,6 +1,10 @@
 from flask import Blueprint, jsonify
 from sqlalchemy import text
-from model import db
+
+try:
+    from .model import db
+except ImportError:
+    from model import db
 
 bp = Blueprint("service", __name__)
 

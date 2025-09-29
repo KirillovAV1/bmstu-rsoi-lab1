@@ -1,5 +1,10 @@
 from flask import Blueprint, request, jsonify
-from model import db, Person
+
+try:
+    from .model import db, Person
+except ImportError:
+    from model import db, Person
+
 
 bp = Blueprint("persons", __name__, url_prefix="/api/v1/persons")
 
