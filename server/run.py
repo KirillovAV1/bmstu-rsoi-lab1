@@ -10,6 +10,7 @@ except ImportError:
     from controller import bp as persons_bp
     from service import bp as service_bp
 
+
 def create_app():
     app = Flask(__name__)
 
