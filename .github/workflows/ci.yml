@@ -28,9 +28,6 @@ jobs:
       - name: Run pytest
         run: PYTHONPATH=$PWD pytest -q server/tests
 
-
-
-
   build:
     name: Build & Push Docker (GHCR)
     needs: test
@@ -39,9 +36,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    env:
-      IMAGE_LATEST: ghcr.io/${{ github.repository }}:latest
-      IMAGE_SHA: ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,7 +54,9 @@ jobs:
           context: server
           file: server/Dockerfile
           push: true
-          tags: ${{ env.IMAGE_LATEST }},${{ env.IMAGE_SHA }}
+          tags: |
+            ${{ toLower(format('ghcr.io/{0}:latest', github.repository)) }}
+            ${{ toLower(format('ghcr.io/{0}:sha-{1}', github.repository, github.sha)) }}
 
   deploy:
     name: Deploy to Render
