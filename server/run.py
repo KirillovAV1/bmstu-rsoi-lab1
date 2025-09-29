@@ -1,8 +1,14 @@
 import os
 from flask import Flask
-from model import db
-from controller import bp as persons_bp
-from service import bp as service_bp
+
+try:
+    from .model import db
+    from .controller import bp as persons_bp
+    from .service import bp as service_bp
+except ImportError:
+    from model import db
+    from controller import bp as persons_bp
+    from service import bp as service_bp
 
 def create_app():
     app = Flask(__name__)
