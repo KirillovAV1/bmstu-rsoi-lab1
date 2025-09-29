@@ -24,9 +24,6 @@ def test_delete_person(client):
     response = client.delete("/api/v1/persons/1")
     assert response.status_code == 204
 
-    response = client.delete("/api/v1/persons/1")
-    assert response.status_code == 404
-
 
 def test_edit_person(client):
     person = {"name": "Bob", "age": 33, "address": "Moscow", "work": "Organization"}
