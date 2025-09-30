@@ -27,7 +27,7 @@ jobs:
         run: PYTHONPATH=$PWD pytest -q server/tests
 
   build:
-    name: Build & Push Docker (GHCR)
+    name: Build
     needs: test
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set image tags (lowercase)
+      - name: Set image tags
         run: |
           REPO_LC=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
           echo "IMAGE_LATEST=ghcr.io/${REPO_LC}:latest" >> $GITHUB_ENV
