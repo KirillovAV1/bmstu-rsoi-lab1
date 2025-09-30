@@ -17,7 +17,7 @@ API:
 [Описание API](person-service.yaml) в формате OpenAPI.
 
 * Для сборки использовался Github Actions.
-* Запросы / ответы должны в формате JSON
+* Запросы / ответы в формате JSON
 * Если запись по id не найдена, то возвращает HTTP статус 404 Not Found.
 * При создании новой записи о человека (метод POST /person) возвращается HTTP статус 201 Created с пустым телом и
   Header `Location: /api/v1/persons/{personId}`, где `personId` – id созданной записи.
